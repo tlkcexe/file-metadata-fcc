@@ -21,18 +21,16 @@ app.post('/api/fileanalyse', upload.single('upfile'), function (req, res) {
     return res.json({ error: 'No file uploaded' });
   }
 
-  // JSON response formatted
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({
+  // ✅ EXACT response expected by FCC
+  res.json({
     name: req.file.originalname,
     type: req.file.mimetype,
     size: req.file.size
-  }, null, 2));
+  });
 });
 
 // Server
 const port = process.env.PORT || 3000;
-
 app.listen(port, function () {
   console.log('Your app is listening on port ' + port);
 });
