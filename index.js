@@ -3,7 +3,6 @@ var cors = require('cors');
 require('dotenv').config();
 const multer = require('multer');
 
-// Ρύθμιση του multer για τα uploads
 const upload = multer({ dest: 'uploads/' });
 
 var app = express();
@@ -15,8 +14,7 @@ app.get('/', function (req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
-// Τελικό endpoint για το File Metadata
-app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
+app.post('/api/fileanalyse', upload.single('upfile'), function (req, res) {
   if (!req.file) {
     return res.json({ error: 'No file uploaded' });
   }
@@ -24,7 +22,7 @@ app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
   res.json({
     name: req.file.originalname,
     type: req.file.mimetype,
-    size: Number(req.file.size)
+    size: req.file.size
   });
 });
 
